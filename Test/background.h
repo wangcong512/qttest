@@ -13,6 +13,8 @@ public:
     void init(QString mapName);
     void initTiled(QString mapName);
     void paintEvent(QPaintEvent *event);
+    int getTiledX();
+    int getTiledY();
 
 
 signals:

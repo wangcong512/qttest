@@ -36,6 +36,10 @@ void BackGround::initTiled(QString mapName)
    int nTiledY = qCeil(pixelHeight/256.0);
    m_nTiledX = nTiledX;
    m_nTiledY = nTiledY;
+
+   this->setGeometry(0,0,nTiledX*256,nTiledY*256);
+   int localwidht = this->width();
+
    QString titedName = QString("%1/%2_%3.jpg").arg(mapName).arg(mapName).arg(nPicIndex);
    QImage tiledImage(titedName);
    do
@@ -46,7 +50,7 @@ void BackGround::initTiled(QString mapName)
            QLabel *label = new QLabel(this);
            label->setPixmap(QPixmap::fromImage(tiledImage));
 
-          label->setGeometry(nPicIndex%nTiledX,nPicIndex/nTiledY,tiledImage.width(),tiledImage.height());
+          label->setGeometry(qFloor(nPicIndex/nTiledX)*256,(nPicIndex%nTiledY)*256,tiledImage.width(),tiledImage.height());
 
 
        }
@@ -54,9 +58,21 @@ void BackGround::initTiled(QString mapName)
           break;
        nPicIndex++;
        titedName = QString("%1/%2_%3.jpg").arg(mapName).arg(mapName).arg(nPicIndex);
+       tiledImage.load(titedName);
        if(nPicIndex >= nTiledX*nTiledY)break;
 
    }while (!tiledImage.isNull());
 
+
+}
+
+int BackGround::getTiledX()
+{
+    return m_nTiledX;
+}
+
+int BackGround::getTiledY()
+{
+    return m_nTiledY;
 
 }

@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QScrollArea* scrollArea = findChild<QScrollArea*>("scrollArea");
     scrollArea->setBackgroundRole(QPalette::Dark);
 
-    BackGround *bk = new BackGround(this);
+    BackGround *bk = new BackGround();
     bk->initTiled("bk");
     scrollArea->setWidget(bk);
 
