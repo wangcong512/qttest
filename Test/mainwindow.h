@@ -20,8 +20,12 @@ public:
     void open();
     void paintEvent(QPaintEvent *event);
 
+private slots:
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString m_strBkName;
 };
 
 #endif // MAINWINDOW_H
