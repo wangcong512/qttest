@@ -2,6 +2,8 @@
 #define BACKGROUND_H
 
 #include <QWidget>
+#include "mapdata.h"
+#include"mainwindow.h"
 
 class BackGround : public QWidget
 {
@@ -15,6 +17,12 @@ public:
     void paintEvent(QPaintEvent *event);
     int getTiledX();
     int getTiledY();
+    void setMainWindow(MainWindow* pMain)
+    {
+        m_pMainWindow = pMain;
+    }
+
+    MainWindow* m_pMainWindow;
 
 
 signals:
@@ -24,6 +32,9 @@ public slots:
 private:
     int m_nTiledX;
     int m_nTiledY;
+    int m_nPixelX;
+    int m_nPixelY;
+
 };
 
 #endif // BACKGROUND_H

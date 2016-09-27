@@ -14,9 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    background.cpp
+    background.cpp \
+    cdrawlayer.cpp \
+    mapdata.cpp
 
 HEADERS  += mainwindow.h \
-    background.h
+    background.h \
+    common.h \
+    cdrawlayer.h \
+    mapdata.h
 
 FORMS    += mainwindow.ui

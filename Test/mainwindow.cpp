@@ -35,16 +35,23 @@ MainWindow::MainWindow(QWidget *parent) :
      openAct->setStatusTip(tr("Open an existing file"));
      connect(openAct, &QAction::triggered, this, &MainWindow::open);
 
+     QAction* saveAct = new QAction(tr("&Save"), this);
+     saveAct->setShortcuts(QKeySequence::Save);
+     saveAct->setStatusTip(tr("Open an existing file"));
+     connect(saveAct, &QAction::triggered, this, &MainWindow::saveFile);
+
      QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
      fileMenu->addAction(newAct);
      fileMenu->addSeparator();
      fileMenu->addAction(openAct);
+     fileMenu->addAction(saveAct);
 
      fileMenu->addSeparator();
 
      QToolBar *fileToolBar = this->addToolBar(tr("&File"));
      fileToolBar->addAction(newAct);
      fileToolBar->addAction(openAct);
+     fileToolBar->addAction(saveAct);
      fileToolBar->setAllowedAreas(Qt::TopToolBarArea | Qt::BottomToolBarArea);
      addToolBar(Qt::TopToolBarArea, fileToolBar);
 
@@ -70,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     scrollArea->setBackgroundRole(QPalette::Dark);
 
     BackGround *bk = new BackGround();
+    bk->setMainWindow(this);
     bk->initTiled("bk");
     scrollArea->setWidget(bk);
 
@@ -102,6 +110,17 @@ void MainWindow::paintEvent(QPaintEvent *event)
     paint.drawLine(0,50,50,50);
 }
 
+void MainWindow::refreshXY(QPoint pt)
+{
+    QLabel *PosX = findChild<QLabel*>("label_2");
+    QLabel *PosY = findChild<QLabel*>("label_3");
+
+    PosX->setText(QString("%1").arg(pt.x()));
+    PosY->setText(QString("%1").arg(pt.y()));
+
+
+}
+
 void MainWindow::newFile()
 {
 
@@ -121,6 +140,11 @@ void MainWindow::open()
                                                      "D:/",
                                                      tr("Images (*.png *.xpm *.jpg)"));
 
+}
+
+void MainWindow::saveFile()
+{
+    MapData::Instance().saveData();
 }
 
 void MainWindow::on_pushButton_3_clicked()

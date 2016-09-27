@@ -18,7 +18,9 @@ public:
 public:
     void newFile();
     void open();
+    void saveFile();
     void paintEvent(QPaintEvent *event);
+    void refreshXY(QPoint pt);
 
 private slots:
     void on_pushButton_3_clicked();
