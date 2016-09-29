@@ -47,6 +47,7 @@ void BackGround::initTiled(QString mapName)
    MapData::Instance().m_nPixelY = pixelHeight;
    MapData::Instance().m_nCellX = qCeil(pixelWidth/CELLWIDTH);
    MapData::Instance().m_nCellY = qCeil(pixelHeight/CELLWIDTH);
+   MapData::Instance().loadData("");
 
 
    this->setGeometry(0,0,nTiledX*256,nTiledY*256);
@@ -81,6 +82,7 @@ void BackGround::initTiled(QString mapName)
    CDrawLayer *layer = new CDrawLayer(this);
    layer->setMainWindow(m_pMainWindow);
    layer->setGeometry(0,0,nTiledX*256,nTiledY*256);
+   layer->setFixedSize(pixelWidth,pixelHeight);
    layer->setMouseTracking(true);
 
 

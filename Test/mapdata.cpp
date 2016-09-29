@@ -19,6 +19,7 @@ void MapData::loadData(QString path)
     delete [] m_grid;
     int gridCount = (m_nCellX + 1)*(m_nCellY + 1);
     m_grid = new char[gridCount];
+    memset(m_grid,0,gridCount);
 
 
 
@@ -37,7 +38,7 @@ void MapData::saveData()
     QString mapName = m_strMapName;
 
     QFile file(QString("%1.lua").arg(mapName));
-    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     strContent.append(QString(" --init data\n"));
     strContent.append(QString("%1 = {\n").arg(mapName));
@@ -45,12 +46,13 @@ void MapData::saveData()
 
     //点阵
 
-    for(int i = 0; i < m_nCellX; i++)
+    for(int i = 0; i < m_nCellY; i++)
     {
       strContent.append(QString(" "));
-      for(int j = 0; j < m_nCellY; j++)
+      for(int j = 0; j < m_nCellX; j++)
       {
-          strContent.append(QString("%1,").arg(0));
+          int nValue = m_grid[i*m_nCellX + j];
+          strContent.append(QString("%1,").arg(nValue));
       }
       strContent.append(QString("\n"));
     }
