@@ -2,6 +2,8 @@
 #include<QFile>
 #include<QFileDevice>
 #include<QTextStream>
+#include"luaengine.h"
+#include<QDebug>
 
 MapData::MapData(QObject *parent) : QObject(parent)
   ,m_grid(NULL)
@@ -21,6 +23,58 @@ void MapData::loadData(QString path)
     m_grid = new char[gridCount];
     memset(m_grid,0,gridCount);
 
+
+    lua_State *ls = LuaEngine::Instance().getStack();
+    luaL_dofile(ls,"bk.lua");
+
+    lua_getglobal(ls,"bk");
+    int ret = lua_gettop(ls);
+    if(ret > 0)
+    {
+        ret = lua_istable(ls,ret);
+        if(ret == 1)
+        {
+//            lua_pushinteger(ls,1);
+//            lua_gettable(ls,2);
+//            int nValue = lua_tointeger(ls,-1);
+//            if(nValue > 0)
+//            {
+//                lua_pop(ls,-1);
+//            }
+
+            lua_pushstring(ls,"tiled_data");
+            lua_gettable(ls,-2);
+
+            int nIndex = 0;
+
+            lua_pushnil(ls);  /* first key */
+            while (lua_next(ls, -2) != 0) {
+
+              char temp_value = (char) lua_tointeger(ls,-1);
+
+              MapData::Instance().m_grid[nIndex] = temp_value;
+
+
+              nIndex++;
+
+
+              lua_pop(ls,1);
+            }
+
+
+
+
+        }
+        else
+        {
+            qDebug() << "not table";
+        }
+
+    }
+    else
+    {
+        qDebug() << "not has value bk";
+    }
 
 
 }

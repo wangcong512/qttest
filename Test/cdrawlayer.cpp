@@ -68,9 +68,16 @@ void CDrawLayer::mouseReleaseEvent(QMouseEvent  *event)
         MapData::Instance().m_grid[cellIndex] = 1;
         this->repaint();
 
+    }
+    else if(event->button()&Qt::RightButton)
+    {
+        QPoint pt = QPoint(event->pos().x(),this->height() - event->pos().y());
 
+        int cellIndex = pt.x()/CELLWIDTH + (pt.y()/CELLWIDTH)*MapData::Instance().m_nCellX;
 
-
+        if(cellIndex < MapData::Instance().m_nCellX*MapData::Instance().m_nCellY)
+        MapData::Instance().m_grid[cellIndex] = 0;
+        this->repaint();
     }
     else
     {
